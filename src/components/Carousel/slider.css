@@ -1,0 +1,37 @@
+.slick-current + .slick-active {
+  background-color: #ff9900 !important;
+  border-radius: 10px;
+  box-shadow: inset -4px -4px 0px -1px #414141d7;
+}
+.slick-current + .slick-active i,
+.slick-current + .slick-active h5,
+.slick-current + .slick-active p,
+.slick-current + .slick-active small {
+  color: aliceblue !important;
+}
+.slick-dots li button:before {
+  font-size: 16px;
+  color:transparent;
+}
+.slick-dots li.slick-active button:before {
+  font-size: 20px;
+  color: #ff6600;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: inset -4px -4px 2px -1px #414141d7;
+}
+
+.slick-dots li button {
+  border: 2px solid #dfdfdf;
+  border-radius: 50%;
+  outline: none;
+ 
+}
+.slick-dots li {
+  margin: 0 5px;
+}
+.slick-initialized .slick-slide {
+  box-shadow: inset -4px -4px 2px -1px #414141d7; 
+  border-radius: 10px;
+}
