@@ -1,5 +1,4 @@
 import axios from 'axios';
-// const SERVER_URL = "http://localhost/restApis";
 
 const login = async (data) => {
     const LOGIN_ENDPOINT = `${global.config.apiUrl}auth/login`;
@@ -14,7 +13,7 @@ const login = async (data) => {
         }
     } catch (e) {
         return false;
-        console.log(e);
+        // console.log(e);
     }
 }
 
