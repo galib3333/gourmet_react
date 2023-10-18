@@ -155,7 +155,7 @@ function MenuItems() {
                                     <div className="col-sm-5">
                                         <div className="mb-3">
                                             <label className="form-label text-white">Image</label>
-                                            <input type="file" className="form-control border-secondary" name="imageSrc" onChange={onFileChange} />
+                                            <input type="file" className="form-control border-secondary" name="imageSrc" onChange={onFileChange} style={{ cursor: 'pointer' }}/>
                                         </div>
                                     </div>
                                 </div>

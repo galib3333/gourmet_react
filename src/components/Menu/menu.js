@@ -5,38 +5,34 @@ import { useCart } from "react-use-cart";
 import "./menu.css";
 import axios from "axios";
 const Menu = ({ showHeader = true, showFooter = true, }) => {
-    // const BASE_URL = 'http://localhost/restApis';
     const [Breakfast, setBreakfast] = useState([]);
     const [Lunch, setLunch] = useState([]);
     const [Dinner, setDinner] = useState([]);
     const { addItem } = useCart();
 
-    const getDatas = async () => {
-        try {
-            const response = await axios.get(`${global.config.apiUrl}menuitem`);
-            let data = response.data;
-
-            if (!Array.isArray(data)) {
-                data = [data];
-            }
-            console.log(data);
-            // Filter data into Breakfast, Lunch, and Dinner
-            const breakfastItems = data.filter(item => item.category_name && item.category_name.includes('Breakfast'));
-            const lunchItems = data.filter(item => item.category_name && item.category_name.includes('Lunch'));
-            const dinnerItems = data.filter(item => item.category_name && item.category_name.includes('Dinner'));
-
-            // Set the filtered items in state
-            setBreakfast(breakfastItems);
-            setLunch(lunchItems);
-            setDinner(dinnerItems);
-        } catch (error) {
-            console.error(error.message);
-        }
-    };
-
     useEffect(() => {
-        // Call the getDatas function
-        getDatas();
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${global.config.apiUrl}menu`);
+                if (response.data.status === 1) {
+                    const data = response.data.data;
+
+                    // Filter data into Breakfast, Lunch, and Dinner
+                    const breakfastItems = data.filter((item) => item.cname.includes('Breakfast'));
+                    const lunchItems = data.filter((item) => item.cname.includes('Lunch'));
+                    const dinnerItems = data.filter((item) => item.cname.includes('Dinner'));
+
+                    // Set the filtered items in state
+                    setBreakfast(breakfastItems);
+                    setLunch(lunchItems);
+                    setDinner(dinnerItems);
+                }
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
+
+        fetchData();
     }, []);
 
     return (
@@ -105,29 +101,33 @@ const Menu = ({ showHeader = true, showFooter = true, }) => {
                                     <div className="row g-4">
                                         {Breakfast && Breakfast.length > 0 ? (
                                             Breakfast.map((menuItem) => (
-                                                <div className="col-lg-6" key={menuItem.id}>
-                                                    <div className="d-flex align-items-center">
-                                                        <img className="flex-shrink-0 img-fluid rounded" src={global.config.apiUrl + menuItem.imageSrc} alt="" style={{ width: '80px' }} />
-                                                        <div className="w-100 d-flex flex-column text-start ps-4">
-                                                            <h5 className="d-flex justify-content-between border-bottom pb-2">
-                                                                <span>
-                                                                    {menuItem.name}
-                                                                    <i className="fas fa-shopping-cart mx-4 btn-primary rounded" onClick={() => addItem(menuItem)} style={{ cursor: 'pointer' }}></i><br />
-                                                                    {menuItem.coupon_code && menuItem.discount_percentage ? (
-                                                                        <span className="text-success ms-2" id='couponText'>
-                                                                            Coupon: {menuItem.coupon_code} ({menuItem.discount_percentage}% off)
-                                                                        </span>
-                                                                    ) : null}
+                                        <div className="col-lg-6" key={menuItem.id}>
+                                            <div className="d-flex align-items-center">
+
+                                            {console.log('Coupon Code:', menuItem.coupon_code)}
+                                        {console.log('Discount Percentage:', menuItem.discount_percentage)}
+
+                                                <img className="flex-shrink-0 img-fluid rounded" src={global.config.apiUrl + menuItem.imageSrc} alt="" style={{ width: '80px' }} />
+                                                <div className="w-100 d-flex flex-column text-start ps-4">
+                                                    <h5 className="d-flex justify-content-between border-bottom pb-2">
+                                                        <span>
+                                                            {menuItem.name}
+                                                            <i className="fas fa-shopping-cart mx-4 btn-primary rounded" onClick={() => addItem(menuItem)} style={{ cursor: 'pointer' }}></i><br />
+                                                            {menuItem.code && menuItem.discount_percentage ? (
+                                                                <span className="text-success ms-2" id='couponText'>
+                                                                    Coupon: {menuItem.code} ({menuItem.discount_percentage}% off)
                                                                 </span>
-                                                                <span className="text-primary">${menuItem.price}</span>
-                                                            </h5>
-                                                            <small className="fst-italic">{menuItem.description}</small>
-                                                        </div>
-                                                    </div>
+                                                            ) : null}
+                                                        </span>
+                                                        <span className="text-primary">${menuItem.price}</span>
+                                                    </h5>
+                                                    <small className="fst-italic">{menuItem.description}</small>
                                                 </div>
-                                            ))
+                                            </div>
+                                        </div>
+                                        ))
                                         ) : (
-                                            <p>No breakfast items available</p>
+                                        <p>No breakfast items available</p>
                                         )}
                                     </div>
                                 </div>
@@ -143,9 +143,9 @@ const Menu = ({ showHeader = true, showFooter = true, }) => {
                                                                 <span>
                                                                     {menuItem.name}
                                                                     <i className="fas fa-shopping-cart mx-4 btn-primary rounded" onClick={() => addItem(menuItem)} style={{ cursor: 'pointer' }}></i><br />
-                                                                    {menuItem.coupon_code && menuItem.discount_percentage ? (
+                                                                    {menuItem.code && menuItem.discount_percentage ? (
                                                                         <span className="text-success ms-2" id='couponText'>
-                                                                            Coupon: {menuItem.coupon_code} ({menuItem.discount_percentage}% off)
+                                                                            Coupon: {menuItem.code} ({menuItem.discount_percentage}% off)
                                                                         </span>
                                                                     ) : null}
                                                                 </span>
@@ -173,9 +173,9 @@ const Menu = ({ showHeader = true, showFooter = true, }) => {
                                                                 <span>
                                                                     {menuItem.name}
                                                                     <i className="fas fa-shopping-cart mx-4 btn-primary rounded" onClick={() => addItem(menuItem)} style={{ cursor: 'pointer' }}></i><br />
-                                                                    {menuItem.coupon_code && menuItem.discount_percentage ? (
+                                                                    {menuItem.code && menuItem.discount_percentage ? (
                                                                         <span className="text-success ms-2" id='couponText'>
-                                                                            Coupon: {menuItem.coupon_code} ({menuItem.discount_percentage}% off)
+                                                                            Coupon: {menuItem.code} ({menuItem.discount_percentage}% off)
                                                                         </span>
                                                                     ) : null}
                                                                 </span>

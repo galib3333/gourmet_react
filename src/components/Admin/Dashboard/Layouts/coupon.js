@@ -13,12 +13,12 @@ function Coupon() {
     getDatas();
   }, []);
   function getDatas() {
-    axios.get('http://localhost/restApis/coupon/index_coupon.php').then(function (response) {
+    axios.get(`${global.config.apiUrl}coupons`).then(function (response) {
       setCoupon(response.data.data);
     });
   }
   const deleteItems = (id) => {
-    axios.delete(`http://localhost/restApis/coupon/delete_coupon.php?id=${id}`).then(function () {
+    axios.delete(`${global.config.apiUrl}coupons/delete/${id}`).then(function () {
       getDatas();
     });
   }
@@ -27,11 +27,10 @@ function Coupon() {
   }
   /* for update */
 
-  function getCoupon(id) {
-    axios.get(`http://localhost/restApis/coupon/single_coupon.php?id=${id}`).then(function (response) {
-      setInputs(response.data);
-      setInputs(values => ({ ...values, }))
-    });
+  function getCoupon(d) {
+    setInputs(d);
+    setInputs(values => ({ ...values, }))
+
   }
 
   const handleChange = (event) => {
@@ -40,14 +39,41 @@ function Coupon() {
     setInputs(values => ({ ...values, [name]: value }));
   }
 
+  //   const handleSubmit = (event) => {
+  //     event.preventDefault();
+  //     axios.post(`${global.config.apiUrl}coupons/create`, inputs).then(function (response) {
+  //         console.log(response.data)
+  //         getDatas();
+  //         if (response.data.status === 1)
+  //             document.getElementById('modelbutton').click();
+  //     });
+  // }
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost/restApis/coupon/create_coupon.php', inputs).then(function (response) {
-      console.log(response.data)
-      getDatas();
-
-    });
+    axios.post(`${global.config.apiUrl}coupons/create`, inputs)
+      .then(function (response) {
+        if (response.data) {
+          if (response.data.status === 1) {
+            // Request was successful
+            console.log(response.data.message); // Log a success message if needed
+            getDatas(); // Refresh data
+            document.getElementById('modelbutton').click();
+          } else {
+            // Request had a validation error
+            console.log(response.data.message); // Log the validation error message
+          }
+        } else {
+          // Handle cases where response.data is undefined
+          console.error("Undefined response data");
+        }
+      })
+      .catch(function (error) {
+        // Handle any network or other errors here
+        console.error("Error:", error);
+      });
   }
+  
+
 
   return (
     <section className="container2">
@@ -102,7 +128,7 @@ function Coupon() {
                 </div>
                 <div className="row">
                   <div className="col-sm-2">
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary" id="modelbutton">Submit</button>
                   </div>
                   <div className="col-sm-3">
                     <button type="button" className="btn btn-danger ms-2" data-bs-dismiss="modal">Close</button>
@@ -135,7 +161,7 @@ function Coupon() {
                       <td>{coupon.discount_percentage}</td>
                       <td>{coupon.expiration_date}</td>
                       <td>
-                        <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getCoupon(coupon.id)}>Edit</button>
+                        <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getCoupon(coupon)} id="modelbutton">Edit</button>
 
                         <button className="btn btn-danger bg-danger w-60 me-2  ms-2 mt-1" onClick={() => deleteItems(coupon.id)}>Delete</button>
                       </td>
