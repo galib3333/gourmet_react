@@ -3,31 +3,42 @@ import Header from '../Header/header'
 import Footer from '../Footer/footer'
 import { useCart } from "react-use-cart";
 import "./menu.css";
+import axios from "axios";
 const Menu = ({ showHeader = true, showFooter = true, }) => {
-    const BASE_URL = 'http://localhost/restApis';
+    // const BASE_URL = 'http://localhost/restApis';
     const [Breakfast, setBreakfast] = useState([]);
     const [Lunch, setLunch] = useState([]);
     const [Dinner, setDinner] = useState([]);
     const { addItem } = useCart();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${BASE_URL}/menu.php`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setBreakfast(data.filter(data => data.category_name.includes('Breakfast')));
-                setLunch(data.filter(data => data.category_name.includes('Lunch')));
-                setDinner(data.filter(data => data.category_name.includes('Dinner')));
+    const getDatas = async () => {
+        try {
+            const response = await axios.get(`${global.config.apiUrl}menuitem`);
+            let data = response.data;
 
-            } catch (error) {
-                console.error(error.message);
+            if (!Array.isArray(data)) {
+                data = [data];
             }
-        };
-        fetchData();
+            console.log(data);
+            // Filter data into Breakfast, Lunch, and Dinner
+            const breakfastItems = data.filter(item => item.category_name && item.category_name.includes('Breakfast'));
+            const lunchItems = data.filter(item => item.category_name && item.category_name.includes('Lunch'));
+            const dinnerItems = data.filter(item => item.category_name && item.category_name.includes('Dinner'));
+
+            // Set the filtered items in state
+            setBreakfast(breakfastItems);
+            setLunch(lunchItems);
+            setDinner(dinnerItems);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        // Call the getDatas function
+        getDatas();
     }, []);
+
     return (
         <div>
             {showHeader && (
@@ -96,7 +107,7 @@ const Menu = ({ showHeader = true, showFooter = true, }) => {
                                             Breakfast.map((menuItem) => (
                                                 <div className="col-lg-6" key={menuItem.id}>
                                                     <div className="d-flex align-items-center">
-                                                        <img className="flex-shrink-0 img-fluid rounded" src={menuItem.imageSrc} alt="" style={{ width: '80px' }} />
+                                                        <img className="flex-shrink-0 img-fluid rounded" src={global.config.apiUrl + menuItem.imageSrc} alt="" style={{ width: '80px' }} />
                                                         <div className="w-100 d-flex flex-column text-start ps-4">
                                                             <h5 className="d-flex justify-content-between border-bottom pb-2">
                                                                 <span>
@@ -126,7 +137,7 @@ const Menu = ({ showHeader = true, showFooter = true, }) => {
                                             Lunch.map((menuItem) => (
                                                 <div className="col-lg-6" key={menuItem.id}>
                                                     <div className="d-flex align-items-center">
-                                                        <img className="flex-shrink-0 img-fluid rounded" src={menuItem.imageSrc} alt="" style={{ width: '80px' }} />
+                                                        <img className="flex-shrink-0 img-fluid rounded" src={global.config.apiUrl + menuItem.imageSrc} alt="" style={{ width: '80px' }} />
                                                         <div className="w-100 d-flex flex-column text-start ps-4">
                                                             <h5 className="d-flex justify-content-between border-bottom pb-2">
                                                                 <span>
@@ -156,7 +167,7 @@ const Menu = ({ showHeader = true, showFooter = true, }) => {
                                             Dinner.map((menuItem) => (
                                                 <div className="col-lg-6" key={menuItem.id}>
                                                     <div className="d-flex align-items-center">
-                                                        <img className="flex-shrink-0 img-fluid rounded" src={menuItem.imageSrc} alt="" style={{ width: '80px' }} />
+                                                        <img className="flex-shrink-0 img-fluid rounded" src={global.config.apiUrl + menuItem.imageSrc} alt="" style={{ width: '80px' }} />
                                                         <div className="w-100 d-flex flex-column text-start ps-4">
                                                             <h5 className="d-flex justify-content-between border-bottom pb-2">
                                                                 <span>

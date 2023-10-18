@@ -12,17 +12,17 @@ function MenuItems() {
         getDatas();
     }, []);
     function getDatas() {
-        axios.get('http://localhost/restApis/crud/index_product.php').then(function (response) {
+        axios.get(`${global.config.apiUrl}menuitem`).then(function (response) {
             setmenuItems(response.data.data);
         });
     }
     function getCategories() {
-        axios.get('http://localhost/restApis/crud/index_category.php').then(function (response) {
+        axios.get(`${global.config.apiUrl}category`).then(function (response) {
             setCategories(response.data.data);
         });
     }
     function getCoupons() {
-        axios.get('http://localhost/restApis/crud/index_coupon.php').then(function (response) {
+        axios.get(`${global.config.apiUrl}coupon`).then(function (response) {
             setCoupons(response.data.data);
         });
     }
@@ -30,7 +30,7 @@ function MenuItems() {
         getCoupons();
     }, []);
     const deleteItems = (id) => {
-        axios.delete(`http://localhost/restApis/crud/delete_product.php?id=${id}`).then(function () {
+        axios.delete(`${global.config.apiUrl}menuitem/delete/${id}`).then(function () {
             getDatas();
         });
     }
@@ -57,7 +57,7 @@ function MenuItems() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost/restApis/crud/create_product.php', inputs).then(function (response) {
+        axios.post(`${global.config.apiUrl}menuitem/create`, inputs).then(function (response) {
             console.log(response.data)
             getDatas();
             if (response.data.status === 1)
@@ -74,13 +74,12 @@ function MenuItems() {
 
     /* for update */
 
-    function getSingleProduct(id) {
+    function getSingleProduct(d) {
         document.getElementById('modelbutton').click();
-        axios.get(`http://localhost/restApis/crud/single_product.php?id=${id}`).then(function (response) {
-            setInputs(response.data);
-            setInputs(values => ({ ...values, "imageSrc": "" }))
-        });
+        setInputs(d);
+        setInputs(values => ({ ...values, "imageSrc": "" }));
     }
+
 
     return (
         <section className="container2">
@@ -197,7 +196,7 @@ function MenuItems() {
                                             <td>{menuItem.id}</td>
                                             <td>
                                                 <img
-                                                    src={menuItem.image}
+                                                    src={global.config.apiUrl + menuItem.imageSrc}
                                                     alt={menuItem.name}
                                                 />
                                             </td>
@@ -207,7 +206,7 @@ function MenuItems() {
                                             <td>{menuItem.code}</td>
                                             <td>${menuItem.price}</td>
                                             <td>
-                                                <button className="btn btn-primary me-2 mb-2 ms-2" onClick={() => getSingleProduct(menuItem.id)}>Edit</button>
+                                                <button className="btn btn-primary me-2 mb-2 ms-2" onClick={() => getSingleProduct(menuItem)}>Edit</button>
                                                 <button className="btn btn-danger bg-danger w-60" onClick={() => deleteItems(menuItem.id)}>Delete</button>
                                             </td>
                                         </tr>
