@@ -81,7 +81,7 @@ const Checkout = () => {
       </div>
 
       {/* Checkout Content */}
-      <div className="container-xxl py-5">
+      <div className="container-xxl py-1">
         <div className="container">
           {/* Your checkout content goes here */}
           {/* Order Summary */}
@@ -145,7 +145,7 @@ const Checkout = () => {
                   <input className="form-control py-3" type="text" placeholder="Enter your coupon code" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} />
 
                   <div onSubmit={(e) => { e.preventDefault(); applyCoupon(); }}>
-                    <button className="btn btn-secondary my-2 py-1 px-3 fw-bold" type='submit'>Apply Coupon</button>
+                    <button className="btn btn-secondary my-2 py-2 px-3 " type='submit'>Apply Coupon</button>
                   </div>
                 </form>
               </div>
@@ -184,7 +184,7 @@ const Checkout = () => {
                   <strong className="text-black">${cartTotal.toFixed(2)}</strong>
                 </div>
                 <div className="col-md-6">
-                  <span className="text-black">Discount</span>
+                  <span className="text-black">Total Discount</span>
                 </div>
                 <div className="col-md-6 text-right">
                   <strong className="text-black">${totalDiscount.toFixed(2)}</strong>
@@ -196,7 +196,7 @@ const Checkout = () => {
                   <strong className="text-black">${discountedTotal.toFixed(2)}</strong>
                 </div>
               </div>
-              <button className="btn btn-secondary py-3 px-3 fw-bold mt-4 ms-5">Place Order</button>
+              <button className="btn btn-secondary py-3 mt-4 ms-2">Place Order</button>
             </div>
           </div>
 

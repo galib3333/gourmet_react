@@ -43,7 +43,7 @@ const TestimonialsCarousel = () => {
                     <h5 className="section-title ff-secondary text-center text-primary fw-normal">Testimonial</h5>
                     <h1 className="mb-5">Our Clients Say!!!</h1>
                 </div>
-                <Slider {...settings} className="slider">
+                <Slider {...settings} className="slider" style={{ cursor: 'pointer' }}>
                     {testimonialsData.map((testimonials, index) => (
                         <div key={testimonials.id}>
                             <div
