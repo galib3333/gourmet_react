@@ -20,7 +20,7 @@ const login = async (data) => {
 const register = async (data) => {
     const SIGNUP_ENDPOINT = `${global.config.apiUrl}auth/register`;
     try {
-        let response = await axios({
+         await axios({
             method: 'post',
             responseType: 'json',
             url: SIGNUP_ENDPOINT,
