@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2023 at 07:02 PM
+-- Generation Time: Oct 19, 2023 at 09:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -89,7 +89,9 @@ CREATE TABLE `coupons` (
 INSERT INTO `coupons` (`id`, `code`, `discount_percentage`, `expiration_date`) VALUES
 (1, 'TMC99', 15.00, '2023-10-26'),
 (2, 'cdn424', 20.00, '2023-10-10'),
-(3, 'char53', 25.00, '2023-10-19');
+(3, 'char53', 25.00, '2023-10-19'),
+(4, 'FDF123', 18.00, '2023-10-28'),
+(5, 'TM62', 10.00, '2023-10-31');
 
 -- --------------------------------------------------------
 
@@ -173,7 +175,7 @@ INSERT INTO `menu_items` (`id`, `name`, `description`, `price`, `imageSrc`, `cat
 (3, 'Crispy Waffles', 'Crispy waffles served with whipped cream, chocolate sauce, and strawberries.', 7.99, 'upload/menu/652fd49dc8477165.jpeg', 1, 1),
 (4, 'Cinnamon French Toast', 'Slices of bread dipped in cinnamon and egg mixture, toasted to perfection.', 6.99, 'upload/menu/652fd4b721508284.jpeg', 1, NULL),
 (5, ' Berry Yogurt Parfait', 'Layers of yogurt, granola, and fresh berries topped with honey.', 5.99, 'upload/menu/652fd4d82d1aa260.jpeg', 1, NULL),
-(6, 'Hearty Breakfast Burrito', 'A hearty breakfast burrito with scrambled eggs, sausage, cheese, and salsa.', 8.49, 'upload/menu/652fd4e8089da604.jpeg', 1, 2),
+(6, 'Hearty Breakfast Burrito', 'A hearty breakfast burrito with scrambled eggs, sausage, cheese, and salsa.', 8.49, 'upload/menu/652fd4e8089da604.jpeg', 1, 4),
 (7, 'Green Smoothie', 'A healthy green smoothie made with spinach, banana, and almond milk.', 5.49, 'upload/menu/652fd4f85aeba501.jpeg', 1, NULL),
 (8, 'Blueberry Muffins', 'Freshly baked blueberry muffins, perfect for a morning treat.', 3.99, 'upload/menu/652fd515254b1850.jpeg', 1, NULL),
 (9, 'Grilled Steak', 'Tender and juicy steak, seasoned and grilled to perfection. Served with your choice of side dishes.', 19.99, 'upload/menu/652fd54f07670843.jpeg', 2, NULL),
@@ -181,13 +183,13 @@ INSERT INTO `menu_items` (`id`, `name`, `description`, `price`, `imageSrc`, `cat
 (11, 'Bacon-Wrapped Chicken', ' Succulent chicken breasts wrapped in crispy bacon and glazed with a sweet and savory sauce.', 14.49, 'upload/menu/652fd5756e4df484.jpeg', 2, NULL),
 (12, 'Spicy Buffalo Wings', 'Crispy and spicy buffalo wings served with celery sticks and blue cheese dressing.', 10.99, 'upload/menu/652fd5849fb46986.jpeg', 2, NULL),
 (13, 'Steak and Shrimp Combo', 'The best of both worlds – a juicy steak paired with grilled shrimp and your choice of sides.', 22.99, 'upload/menu/652fd592656a3643.jpeg', 2, NULL),
-(14, 'Beef Stir-Fry', ' Sliced beef cooked with mixed vegetables in a savory stir-fry sauce. Served with steamed rice.', 11.99, 'upload/menu/652fd5ab11631274.jpeg', 2, 3),
+(14, 'Beef Stir-Fry', ' Sliced beef cooked with mixed vegetables in a savory stir-fry sauce. Served with steamed rice.', 11.99, 'upload/menu/652fd5ab11631274.jpeg', 2, 5),
 (15, 'Sausage Platter', 'A variety of sausages, grilled and served with mustard, sauerkraut, and artisan bread.', 13.49, 'upload/menu/652fd5c4160c0610.jpeg', 2, NULL),
 (16, 'Chicken Chili Pizza', 'Succulent chicken breasts wrapped in crispy bacon and glazed with a sweet and savory sauce.', 25.99, 'upload/menu/652fd5ce9c5fa763.jpeg', 2, NULL),
 (17, 'Spaghetti Bolognese', 'A classic Italian pasta dish with savory meat sauce and Parmesan cheese.', 12.99, 'upload/menu/652fd5eed51b3731.jpeg', 3, NULL),
 (18, 'Grilled Salmon Fillet', 'Tender grilled salmon fillet served with steamed vegetables and lemon butter sauce.', 15.99, 'upload/menu/652fd60c40e82981.jpeg', 3, NULL),
 (19, 'Chicken Alfredo Pasta', 'Creamy Alfredo sauce with grilled chicken and fettuccine pasta.', 14.49, 'upload/menu/652fd61bd5ebd829.jpeg', 3, NULL),
-(20, 'Margherita Pizza', 'Classic pizza with tomato sauce, fresh mozzarella cheese, basil, and olive oil.', 11.99, 'upload/menu/652fd62725b52772.jpeg', 3, 2),
+(20, 'Margherita Pizza', 'Classic pizza with tomato sauce, fresh mozzarella cheese, basil, and olive oil.', 11.99, 'upload/menu/652fd62725b52772.jpeg', 3, 3),
 (21, 'Steakhouse Ribeye Steak', 'Juicy and flavorful ribeye steak cooked to perfection, served with mashed potatoes.', 19.99, 'upload/menu/652fd638a8929734.jpeg', 3, 2),
 (22, 'Vegetable Stir-Fry', 'A medley of fresh vegetables stir-fried with tofu in a savory sauce.', 10.99, 'upload/menu/652fd647dad74494.jpeg', 3, NULL),
 (23, 'Beef Tacos', 'Soft tacos filled with seasoned ground beef, lettuce, cheese, and salsa.', 8.99, 'upload/menu/652fd97a4b316204.jpeg', 3, NULL),
@@ -249,7 +251,7 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id`, `name`, `email`, `datetime`, `no_of_people`, `special_request`, `created_at`) VALUES
-(2, 'Morgan', 'morgan@gmail.com', '2023-10-19 22:58:00', 2, 'ghfghfghfghghf', '2023-10-02 16:58:25');
+(2, 'Morgan Freeman', 'morgan@gmail.com', '2023-10-19 22:58:00', 4, 'Lake side view', '2023-10-02 16:58:25');
 
 -- --------------------------------------------------------
 
@@ -464,7 +466,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `dinner`
@@ -500,7 +502,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `services`
