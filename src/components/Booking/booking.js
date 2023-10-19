@@ -4,7 +4,6 @@ import Footer from '../Footer/footer'
 import axios from "axios";
 
 const Booking = ({ showHeader = true, showFooter = true, showHero = true }) => {
-    const [reservation, setReservation] = useState([]);
     const [inputs, setInputs] = useState({
         name: '',
         email: '',
@@ -14,12 +13,11 @@ const Booking = ({ showHeader = true, showFooter = true, showHero = true }) => {
     });
     useEffect(() => {
         getDatas();
-      }, []);
-      function getDatas() {
+    }, []);
+    function getDatas() {
         axios.get(`${global.config.apiUrl}reservation`).then(function (response) {
-          setReservation(response.data.data);
         });
-      }
+    }
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
