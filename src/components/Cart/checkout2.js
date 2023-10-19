@@ -28,7 +28,7 @@ const Checkout = () => {
         updatedCouponDiscounts[couponCode] = 0;
 
         items.forEach((item) => {
-          if (item.code && item.code === couponCode) {
+          if (item.coupon_code && item.coupon_code === couponCode) {
             const itemDiscount = (item.price * item.quantity * data.discount_percentage) / 100;
 
             console.log(`Item: ${item.name}, Coupon: ${item.code}`);
@@ -144,7 +144,7 @@ const Checkout = () => {
                 <form onSubmit={(e) => { e.preventDefault(); applyCoupon(); }}>
                   <input className="form-control py-3" type="text" placeholder="Enter your coupon code" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} />
 
-                  <div onSubmit={(e) => { e.preventDefault(); applyCoupon(); }}>
+                  <div>
                     <button className="btn btn-secondary my-2 py-1 px-3 fw-bold" type='submit'>Apply Coupon</button>
                   </div>
                 </form>

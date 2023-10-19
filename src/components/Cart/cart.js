@@ -71,7 +71,7 @@ const Cart = () => {
                                         {items.map((item) => (
                                             <tr key={item.id}>
                                                 <td className="product-thumbnail">
-                                                    <img src={item.imageSrc} alt="{item.name}" className="img-fluid rounded" />
+                                                    <img src={global.config.apiUrl + item.imageSrc} alt="{item.name}" className="img-fluid rounded" />
                                                 </td>
                                                 <td className="product-name">
                                                     <h2 className="h5 text-black mt-4">{item.name}</h2>

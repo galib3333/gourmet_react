@@ -13,7 +13,7 @@ const Menu = ({ showHeader = true, showFooter = true, }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${global.config.apiUrl}menu`);
+                const response = await axios.get(`${global.config.apiUrl}menuitem`);
                 if (response.data.status === 1) {
                     const data = response.data.data;
 

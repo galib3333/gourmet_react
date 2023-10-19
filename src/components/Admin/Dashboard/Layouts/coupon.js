@@ -30,7 +30,6 @@ function Coupon() {
   function getCoupon(d) {
     setInputs(d);
     setInputs(values => ({ ...values, }))
-
   }
 
   const handleChange = (event) => {
@@ -38,43 +37,15 @@ function Coupon() {
     const value = event.target.value;
     setInputs(values => ({ ...values, [name]: value }));
   }
-
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     axios.post(`${global.config.apiUrl}coupons/create`, inputs).then(function (response) {
-  //         console.log(response.data)
-  //         getDatas();
-  //         if (response.data.status === 1)
-  //             document.getElementById('modelbutton').click();
-  //     });
-  // }
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`${global.config.apiUrl}coupons/create`, inputs)
-      .then(function (response) {
-        if (response.data) {
-          if (response.data.status === 1) {
-            // Request was successful
-            console.log(response.data.message); // Log a success message if needed
-            getDatas(); // Refresh data
-            document.getElementById('modelbutton').click();
-          } else {
-            // Request had a validation error
-            console.log(response.data.message); // Log the validation error message
-          }
-        } else {
-          // Handle cases where response.data is undefined
-          console.error("Undefined response data");
-        }
-      })
-      .catch(function (error) {
-        // Handle any network or other errors here
-        console.error("Error:", error);
-      });
+    axios.post(`${global.config.apiUrl}coupons/create`, inputs).then(function (response) {
+      console.log(response.data)
+      getDatas();
+      if (response.data.status === 1)
+        document.getElementById('modelbutton').click();
+    });
   }
-  
-
-
   return (
     <section className="container2">
       <div className="row">

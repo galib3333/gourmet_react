@@ -15,12 +15,12 @@ function Reservation() {
     getDatas();
   }, []);
   function getDatas() {
-    axios.get('http://localhost/restApis/reservation/index_reserv.php').then(function (response) {
+    axios.get(`${global.config.apiUrl}reservation`).then(function (response) {
       setReservation(response.data.data);
     });
   }
   const deleteItems = (id) => {
-    axios.delete(`http://localhost/restApis/reservation/delete_reserv.php?id=${id}`).then(function () {
+    axios.delete(`${global.config.apiUrl}reservation/delete/${id}`).then(function () {
       getDatas();
     });
   }
@@ -29,11 +29,9 @@ function Reservation() {
   }
   /* for update */
 
-  function getReservation(id) {
-    axios.get(`http://localhost/restApis/reservation/single_reserv.php?id=${id}`).then(function (response) {
-      setInputs(response.data);
+  function getReservation(d) {
+      setInputs(d);
       setInputs(values => ({ ...values, }))
-    });
   }
 
   const handleChange = (event) => {
@@ -44,10 +42,11 @@ function Reservation() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost/restApis/reservation/create_reserv.php', inputs).then(function (response) {
+    axios.post(`${global.config.apiUrl}reservation/create`, inputs).then(function (response) {
       console.log(response.data)
       getDatas();
-
+      if (response.data.status === 1)
+        document.getElementById('modelbutton').click();
     });
   }
 
@@ -142,7 +141,7 @@ function Reservation() {
                       <td>{reservation.no_of_people}</td>
                       <td>{reservation.special_request}</td>
                       <td>
-                        <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getReservation(reservation.id)}>Edit</button>
+                        <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getReservation(reservation)} id="modelbutton">Edit</button>
 
                         <button className="btn btn-danger bg-danger w-60 me-2  ms-2 mt-1" onClick={() => deleteItems(reservation.id)}>Delete</button>
                       </td>

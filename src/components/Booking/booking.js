@@ -4,6 +4,7 @@ import Footer from '../Footer/footer'
 import axios from "axios";
 
 const Booking = ({ showHeader = true, showFooter = true, showHero = true }) => {
+    const [reservation, setReservation] = useState([]);
     const [inputs, setInputs] = useState({
         name: '',
         email: '',
@@ -11,14 +12,14 @@ const Booking = ({ showHeader = true, showFooter = true, showHero = true }) => {
         no_of_people: '',
         special_request: '',
     });
-
     useEffect(() => {
         getDatas();
-    }, []);
-    function getDatas() {
-        axios.get('http://localhost/restApis/reservation/index_reserv.php').then(function (response) {
+      }, []);
+      function getDatas() {
+        axios.get(`${global.config.apiUrl}reservation`).then(function (response) {
+          setReservation(response.data.data);
         });
-    }
+      }
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -26,14 +27,13 @@ const Booking = ({ showHeader = true, showFooter = true, showHero = true }) => {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost/restApis/reservation/create_reserv.php', inputs).then(function (response) {
+        axios.post(`${global.config.apiUrl}reservation/create`, inputs).then(function (response) {
             console.log(response.data)
-            setFormSubmitted(true);
+            getDatas();
+            if (response.data.status === 1)
+                setFormSubmitted(true);
         });
     }
-    // const clearData = () => {
-    //     setInputs(values => ({ ...values, "id": "", "name": "", "email": "", "datetime": "", "no_of_people": "", "special_request": "" }))
-    // }
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     return (
@@ -120,7 +120,7 @@ const Booking = ({ showHeader = true, showFooter = true, showHero = true }) => {
                                             </div>
                                         </div>
                                         <div className="col-12">
-                                            <button className="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                                            <button className="btn btn-primary w-100 py-3" type="submit" >Book Now</button>
                                         </div>
                                     </div>
                                 </form>
