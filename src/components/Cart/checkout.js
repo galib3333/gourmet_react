@@ -4,6 +4,7 @@ import Footer from '../Footer/footer';
 import { useCart } from "react-use-cart";
 import { checkCoupon } from '../../api/check_coupon';
 import "./checkout.css";
+import { Link } from 'react-router-dom';
 
 const Checkout = () => {
   const { cartTotal, items } = useCart();
@@ -196,7 +197,9 @@ const Checkout = () => {
                   <strong className="text-black">${discountedTotal.toFixed(2)}</strong>
                 </div>
               </div>
+              <Link to="/order">
               <button className="btn btn-secondary py-3 mt-4 ms-2">Place Order</button>
+              </Link>
             </div>
           </div>
 

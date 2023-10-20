@@ -63,6 +63,7 @@ const Header = () => {
                     <Link className="nav-link cartIcon" to="/cart"><img src="../assets/img/cart.svg" alt='' />
                         <span className="cart-item-count">{totalUniqueItems}</span>
                     </Link>
+                    
                     <div>
                         {isSignedIn ? (
                             <div className="header__right__auth">

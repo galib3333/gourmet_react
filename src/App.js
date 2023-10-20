@@ -15,6 +15,7 @@ import Login from './components/Admin/Login/login';
 import Dashboard from './components/Admin/Dashboard/dashboard'
 import Protected from './components/Protected'
 import Checkout from '../src/components/Cart/checkout';
+import Order from '../src/components/Cart/order';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
           <Route path='/booking' element={<Booking />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/checkout' element={<Checkout />} />
+          <Route path='/order' element={<Order />} />
           <Route path='/login' element={<Login />} />
           <Route path="/dashboard" element={<Protected isSignedIn={isSignedIn}><Dashboard /></Protected>} />
         </Routes>
