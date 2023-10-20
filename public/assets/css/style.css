@@ -58,6 +58,17 @@
     background: #FEA116;
     border-color: #292929;
     box-shadow: inset -2px -2px 0px -1px #414141d7; 
+    font-weight: bold;
+}
+.btn.btn-primary {
+    font-weight: 600;
+    padding: 9px 30px;
+    border-radius: 10px;
+    color: #292929;
+    background: #FEA116;
+    border-color: #292929;
+    box-shadow: inset -2px -2px 0px -1px #414141d7; 
+    font-weight: bold;
 }
 
 .btn-square {

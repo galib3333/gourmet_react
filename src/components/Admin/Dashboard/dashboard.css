@@ -29,7 +29,6 @@
   justify-content: center;
 }
 
-
 img {
   display: block;
   max-width: 100%;
@@ -65,10 +64,16 @@ textarea {
 
 .app-header {
   display: grid;
-  grid-template-columns: minmax(-webkit-min-content, 175px) minmax(-webkit-max-content, 1fr) minmax(-webkit-max-content, 400px);
-  grid-template-columns: minmax(min-content, 175px) minmax(max-content, 1fr) minmax(max-content, 400px);
+  grid-template-columns: minmax(-webkit-min-content, 175px) minmax(
+      -webkit-max-content,
+      1fr
+    ) minmax(-webkit-max-content, 400px);
+  grid-template-columns: minmax(min-content, 175px) minmax(max-content, 1fr) minmax(
+      max-content,
+      400px
+    );
   -moz-column-gap: 4rem;
-       column-gap: 4rem;
+  column-gap: 4rem;
   align-items: flex-end;
 }
 @media (max-width: 1200px) {
@@ -118,10 +123,16 @@ textarea {
 .app-body {
   height: 100%;
   display: grid;
-  grid-template-columns: minmax(-webkit-min-content, 175px) minmax(-webkit-max-content, 1fr) minmax(-webkit-min-content, 400px);
-  grid-template-columns: minmax(min-content, 175px) minmax(max-content, 1fr) minmax(min-content, 400px);
+  grid-template-columns: minmax(-webkit-min-content, 175px) minmax(
+      -webkit-max-content,
+      1fr
+    ) minmax(-webkit-min-content, 400px);
+  grid-template-columns: minmax(min-content, 175px) minmax(max-content, 1fr) minmax(
+      min-content,
+      400px
+    );
   -moz-column-gap: 4rem;
-       column-gap: 4rem;
+  column-gap: 4rem;
   padding-top: 2.5rem;
 }
 @media (max-width: 1200px) {
@@ -147,8 +158,6 @@ textarea {
 .footer {
   margin-top: auto;
   background-color: var(--c-gray-800);
- 
- 
 }
 .footer h1 {
   font-size: 1.5rem;
@@ -225,7 +234,8 @@ textarea {
 .navigation a + a {
   margin-top: 1.25rem;
 }
-.navigation a:hover, .navigation a:focus {
+.navigation a:hover,
+.navigation a:focus {
   transform: translateX(4px);
   color: var(--c-text-primary);
 }
@@ -244,7 +254,9 @@ textarea {
   display: inline-flex;
   transition: 0.25s ease;
 }
-.tabs a.active, .tabs a:hover, .tabs a:focus {
+.tabs a.active,
+.tabs a:hover,
+.tabs a:focus {
   color: var(--c-text-primary);
   border-color: var(--c-text-primary);
 }
@@ -261,12 +273,14 @@ textarea {
   margin-left: 400px;
 }
 #user {
-  padding: 4px 31px;;
+  padding: 4px 31px;
 }
-.user-profile:hover, .user-profile:focus {
+.user-profile:hover,
+.user-profile:focus {
   color: var(--c-text-primary);
 }
-.user-profile:hover span:last-child, .user-profile:focus span:last-child {
+.user-profile:hover span:last-child,
+.user-profile:focus span:last-child {
   box-shadow: 0 0 0 3px var(--c-gray-800), 0 0 0 5px var(--c-text-tertiary);
 }
 .user-profile span:first-child {
@@ -291,7 +305,6 @@ textarea {
 }
 
 .icon-button {
-  
   height: 32px;
   border-radius: 50%;
   border: 0;
@@ -312,7 +325,8 @@ textarea {
 .icon-button i {
   transition: 0.25s ease;
 }
-.icon-button:hover, .icon-button:focus {
+.icon-button:hover,
+.icon-button:focus {
   /* background-color: var(--c-gray-600); */
   /* box-shadow: 0 0 0 4px var(--c-gray-800), 0 0 0 5px var(--c-text-tertiary); */
 }
@@ -321,7 +335,7 @@ textarea {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   -moz-column-gap: 1rem;
-       column-gap: 1rem;
+  column-gap: 1rem;
   row-gap: 1rem;
   margin-top: 1.25rem;
 }
@@ -372,10 +386,12 @@ textarea {
   color: inherit;
   border-color: inherit;
 }
-.tile a .icon-button:hover, .tile a .icon-button:focus {
+.tile a .icon-button:hover,
+.tile a .icon-button:focus {
   background-color: transparent;
 }
-.tile a .icon-button:hover i, .tile a .icon-button:focus i {
+.tile a .icon-button:hover i,
+.tile a .icon-button:focus i {
   transform: none;
 }
 .tile a:focus {
@@ -471,8 +487,8 @@ textarea {
   background-color: transparent;
   padding-right: 1.5rem;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   color: var(--c-text-tertiary);
   width: 100%;
 }
@@ -492,7 +508,8 @@ textarea {
   transition: 0.25s ease;
   cursor: pointer;
 }
-.flat-button:hover, .flat-button:focus {
+.flat-button:hover,
+.flat-button:focus {
   background-color: var(--c-gray-600);
 }
 
@@ -506,7 +523,7 @@ textarea {
 }
 
 .transfer-section {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .transfer-section-header {
@@ -735,7 +752,9 @@ textarea {
 .card-button.mastercard svg {
   max-height: 15px;
 }
-.card-button:focus, .card-button:hover, .card-button.active {
+.card-button:focus,
+.card-button:hover,
+.card-button.active {
   color: var(--c-gray-800);
   background-color: var(--c-white);
   border-color: var(--c-white);
@@ -787,7 +806,8 @@ textarea {
   transition: 0.25s ease;
   cursor: pointer;
 }
-.save-button:focus, .save-button:hover {
+.save-button:focus,
+.save-button:hover {
   color: var(--c-white);
 }
 
@@ -805,7 +825,8 @@ textarea {
 .settings-button i {
   margin-right: 0.5rem;
 }
-.settings-button:focus, .settings-button:hover {
+.settings-button:focus,
+.settings-button:hover {
   color: var(--c-white);
 }
 
@@ -832,23 +853,22 @@ button:focus {
 .menu {
   width: 60rem;
 }
-.menu-table th, .menu-table td {
+.menu-table th,
+.menu-table td {
   padding: 6px;
   text-align: left;
   text-align: center;
   font-weight: bold;
   font-size: 14px;
-  
 }
 
 .menu-table th {
-  background-color:  var(--c-gray-600);
+  background-color: var(--c-gray-600);
   font-weight: bold;
   font-size: 10px;
   color: #f1f1f1;
   padding: 12px;
   font-size: 16px;
-  
 }
 
 .menu-table tr:nth-child(even) {
@@ -856,7 +876,7 @@ button:focus {
 }
 
 .menu-table tr:hover {
-  background-color: #FEA116;
+  background-color: #fea116;
   color: #313131;
 }
 
@@ -876,7 +896,7 @@ button:focus {
 .menu-table-container {
   display: flex;
   justify-content: center;
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 /* Responsive styles for smaller screens */
@@ -894,19 +914,19 @@ button:focus {
 /* .container2 {
   width: 900px;
 } */
-.col-sm-3 .btn-danger{
+.col-sm-3 .btn-danger {
   font-weight: 600;
-    padding: 9px 35px;
-    border-radius: 10px;
-    color: #ffffff;
-    border-color: #292929;
-    box-shadow: inset -2px -2px 0px -1px #414141d7;
+  padding: 9px 35px;
+  border-radius: 10px;
+  color: #ffffff;
+  border-color: #292929;
+  box-shadow: inset -2px -2px 0px -1px #414141d7;
 }
 .bg-danger {
   font-weight: 600;
-    padding: 9px 20px;
-    border-radius: 10px;
-    color: #ffffff;
-    border-color: #292929;
-    box-shadow: inset -2px -2px 0px -1px #414141d7;
+  padding: 9px 20px;
+  border-radius: 10px;
+  color: #ffffff;
+  border-color: #292929;
+  box-shadow: inset -2px -2px 0px -1px #414141d7;
 }

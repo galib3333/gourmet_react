@@ -37,7 +37,7 @@ function Dashboard() {
                         <button className="user-profile" id="user">
                             <span>{userLogged.name}</span>
                             <span>
-                                <img src={`http://localhost/restApis/${userLogged.image}`} alt="" />
+                                <img src={`${global.config.apiUrl}${userLogged.image}`} alt="" />
                             </span>
                         </button>
                         {/* <div className="app-header-actions-buttons">

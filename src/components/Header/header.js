@@ -53,38 +53,42 @@ const Header = () => {
                         <Link to="/contact" className={`nav-item nav-link ${isLinkActive('/contact')}`}>Contact</Link>
                     </div>
                     <Link to="/booking" className="btn btn-primary py-2 px-4">Book A Table</Link>
-                    
+
                     {isSignedIn ? (
                         <a className="fa-lg text-white ms-3" href="/dashboard">
-                            <i className="fas fa-tachometer-alt"></i>
+                            <i className="fas fa-tachometer-alt" id='dashIcon'></i>
                         </a>
                     ) : null}
 
                     <Link className="nav-link cartIcon" to="/cart"><img src="../assets/img/cart.svg" alt='' />
                         <span className="cart-item-count">{totalUniqueItems}</span>
                     </Link>
-                    
-                    <div>
-                        {isSignedIn ? (
-                            <div className="header__right__auth">
-                                <button className="btn btn-link ms-1" type="button" onClick={signout}>
-                                    Sign out
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="header__right__auth ms-3">
-                                <button className='btn btn-secondery'> 
-                                <a href="./login">
-                                    Sign in
-                                </a> <br />
-                                <a href="./login">
-                                    Register
-                                </a>
-                                </button>
-                            </div>
-                        )}
-                    </div>
 
+                    <div className="nav-item dropdown">
+                        <Link to="/" className="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static">
+                        <i class="fas fa-user fa-lg"></i></Link>
+                        <div className="dropdown-menu mt-2" id='custom-dropdown-menu'>
+                            <div>
+                                {isSignedIn ? (
+                                    <div className="header__right__auth">
+                                        <button className="btn btn-link ms-1 text-dark" type="button" onClick={signout}>
+                                            Sign out
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="header__right__auth">
+                                        <Link to="./login" className={`dropdown-item text-dark ${isLinkActive('/login')}`}>
+                                            Sign in
+                                        </Link>
+                                        <Link to="./login" className={`dropdown-item text-dark ${isLinkActive('/login')}`}>
+                                            Register
+                                        </Link>
+
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </nav>
             {/* Navbar */}

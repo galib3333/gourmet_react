@@ -5,7 +5,7 @@ import { login, register } from "../Auth/auth";
 
 function Login() {
     const navigate = useNavigate();
-
+    const [signUpSuccess, setSignUpSuccess] = useState(false);
     const [inputs, setInputs] = useState([]);
     const handleChange = (event) => {
         const name = event.target.name;
@@ -29,7 +29,7 @@ function Login() {
         // Handle registration
         await register(inputs);
         navigate('/login');
-        setFormSubmitted(true);
+        setSignUpSuccess(true);
     }
 
     const toggleFormContainer = (isSignUp) => {
@@ -52,8 +52,6 @@ function Login() {
         }
     }
 
-    const [formSubmitted, setFormSubmitted] = useState(false);
-
     return (
         <div className="body">
 
@@ -74,12 +72,13 @@ function Login() {
                         <label htmlFor="psw"><b>Upload Image</b></label>
                         <input type="file" className="form-control" name="image" onChange={onFileChange} />
                         <button type="submit">Sign Up</button>
+                        {signUpSuccess && (
+                            <div className="alert alert-success text-center rounded mt-2 pt-1 pb-1">
+                                Sign Up Successful!
+                            </div>
+                        )}
                     </form>
-                    {formSubmitted && (
-                        <div className="alert alert-success mt-3 text-center rounded">
-                            Form submitted successfully!
-                        </div>
-                    )}
+
                 </div>
 
                 <div className="form-container sign-in-container">
