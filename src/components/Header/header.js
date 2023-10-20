@@ -66,7 +66,7 @@ const Header = () => {
 
                     <div className="nav-item dropdown">
                         <Link to="/" className="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static">
-                        <i class="fas fa-user fa-lg"></i></Link>
+                        <i class="text-white fas fa-user fa-lg"></i></Link>
                         <div className="dropdown-menu mt-2" id='custom-dropdown-menu'>
                             <div>
                                 {isSignedIn ? (

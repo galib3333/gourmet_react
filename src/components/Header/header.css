@@ -12,6 +12,7 @@
 
 .nav-item.dropdown:hover .dropdown-menu {
   display: block;
+  
 }
 .cart-item-count {
   position: absolute;
@@ -37,9 +38,6 @@
 }
 #custom-dropdown-menu {
   left: -79px;
-}
-#dashIcon {
-  color: #fea116;
 }
 @media (max-width: 768px) {
   #custom-dropdown-menu {
