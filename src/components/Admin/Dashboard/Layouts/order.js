@@ -82,7 +82,6 @@ function Order() {
       console.log(response.data);
       getOrders();
       if (response.data.status === 1) {
-        document.getElementById('modelbutton').click();
       }
     });
   }
@@ -224,18 +223,16 @@ function Order() {
                       <td>{order.discount}</td>
                       <td>{order.total}</td>
                       <td>
-                      <div className="form-group">
-                        <select className="form-control border-secondary" onChange={(e) => handleChange(order.id, e.target.value)}>
+                        <select name="status" className="form-control border-secondary bg-success text-white" style={{ width: '122px' }} onChange={handleChange}>
                           <option value="Pending">Select Status</option>
                           <option value="Pending">Pending</option>
                           <option value="Processing">Processing</option>
                           <option value="Shipped">Shipped</option>
                           <option value="Delivered">Delivered</option>
                         </select>
-                        </div>
                       </td>
                       <td>
-                        <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getOrder(order)} id="modelbutton">Edit</button>
+                        <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getOrder(order)}>Edit</button>
                         <button className="btn btn-danger bg-danger w-60 me-2  ms-2 mt-1" onClick={() => deleteOrder(order.order_id)}>Delete</button>
                       </td>
                     </tr>
