@@ -7,7 +7,7 @@ import { checkCoupon } from '../../api/check_coupon';
 import "./checkout.css";
 
 const Checkout = () => {
-  const { cartTotal, items, emptyCart  } = useCart();
+  const { cartTotal, items, emptyCart } = useCart();
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscounts, setCouponDiscounts] = useState({});
   const [totalDiscount, setTotalDiscount] = useState(0);
@@ -63,42 +63,43 @@ const Checkout = () => {
   const discountedTotal = cartTotal - totalDiscount;
 
   const placeOrder = async () => {
-   
-      try {
-        const orderData = {
-          first_name: document.getElementById('firstName').value,
-          last_name: document.getElementById('lastName').value,
-          email: document.getElementById('email').value,
-          address: document.getElementById('address').value,
-          items: items,
-          sub_total: cartTotal.toFixed(2),
-          discount: totalDiscount.toFixed(2),
-          total: discountedTotal.toFixed(2),
-        };
-        const response = await fetch(`${global.config.apiUrl}order/create`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(orderData), // Assuming 'inputs' contains the data you want to send
-        });
-        const data = await response.json();
-        console.log(data);
 
-        if (data.status == 1) {
-          // Order was successfully placed
-          alert('Order placed successfully!');
-          emptyCart();
-          navigate('/ordersuccess');
-          // You can perform further actions, such as clearing the cart
-        } else {
-          // Order placement failed
-          alert('Failed to place the order. Please try again.');
-        }
-      } catch (error) {
-        // Handle errors here, e.g., network issues or server errors
-        console.error(error);
+    try {
+      const orderData = {
+        first_name: document.getElementById('firstName').value,
+        last_name: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        address: document.getElementById('address').value,
+        items: items,
+        sub_total: cartTotal.toFixed(2),
+        discount: totalDiscount.toFixed(2),
+        total: discountedTotal.toFixed(2),
+        status: 'Pending',
+      };
+      const response = await fetch(`${global.config.apiUrl}order/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData), // Assuming 'inputs' contains the data you want to send
+      });
+      const data = await response.json();
+      console.log(data);
+
+      if (data.status === 1) {
+        // Order was successfully placed
+        alert('Order placed successfully!');
+        emptyCart();
+        navigate('/ordersuccess');
+        // You can perform further actions, such as clearing the cart
+      } else {
+        // Order placement failed
+        alert('Failed to place the order. Please try again.');
       }
+    } catch (error) {
+      // Handle errors here, e.g., network issues or server errors
+      console.error(error);
+    }
   };
 
 
@@ -237,9 +238,9 @@ const Checkout = () => {
                   <strong className="text-black">${discountedTotal.toFixed(2)}</strong>
                 </div>
               </div>
-              
-                <button className="btn btn-secondary py-3 mt-4 ms-2" onClick={placeOrder}>Place Order</button>
-             
+
+              <button className="btn btn-secondary py-3 mt-4 ms-2" onClick={placeOrder}>Place Order</button>
+
             </div>
           </div>
 

@@ -81,8 +81,8 @@ function Dashboard() {
                                 <i className="ph-file-text"></i>
                                 <span>Coupons</span>
                             </a>
-                            <a href="#order">
-                                <i className="ph-globe" onClick={toggleOrder}></i>
+                            <a href="#order" onClick={toggleOrder}>
+                                <i className="ph-globe" ></i>
                                 <span>Order</span>
                             </a>
                             <a href="./">

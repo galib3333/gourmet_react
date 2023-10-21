@@ -83,7 +83,7 @@ function Coupon() {
                   </div>
                   <div className="col-sm-5 ">
                     <div className="mb-3">
-                      <label className="form-label text-white" htmlFor="email">Discount Percentage</label>
+                      <label className="form-label text-white" htmlFor="discount_percentage">Discount Percentage</label>
                       <input type="text" className="form-control border-secondary" id="discount_percentage" name="discount_percentage" value={inputs.discount_percentage} onChange={handleChange} placeholder="Discount Percentage" />
                     </div>
                   </div>

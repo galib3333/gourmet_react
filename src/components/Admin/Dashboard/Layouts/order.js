@@ -1,66 +1,101 @@
-import { useState, useEffect, React } from "react";
+import { React, useState, useEffect } from "react";
 import axios from "axios";
 import '../dashboard.css';
 
 function Order() {
-  const [coupon, setCoupon] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [inputs, setInputs] = useState({
-    code: '',
-    discount_percentage: '',
-    expiration_date: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    address: '',
+    items: [],
+    sub_total: '',
+    discount: '',
+    total: '',
+    status: '',
   });
-  useEffect(() => {
-    getDatas();
-  }, []);
-  function getDatas() {
-    axios.get(`${global.config.apiUrl}order`).then(function (response) {
-      setCoupon(response.data.data);
-    });
-  }
-  const deleteItems = (id) => {
-    axios.delete(`${global.config.apiUrl}order/delete/${id}`).then(function () {
-      getDatas();
-    });
-  }
-  const clearData = () => {
-    setInputs(values => ({ ...values, "id": "", "code": "", "discount_percentage": "", "expiration_date": "" }))
-  }
-  /* for update */
 
-  function getCoupon(d) {
-    setInputs(d);
-    setInputs(values => ({ ...values, }))
+  useEffect(() => {
+    getOrders();
+  }, []);
+
+  function getOrders() {
+    axios.get(`${global.config.apiUrl}order`).then(function (response) {
+      setOrders(response.data.data);
+    });
+  }
+
+  const deleteOrder = (id) => {
+    axios.delete(`${global.config.apiUrl}order/delete/${id}`).then(function () {
+      getOrders();
+    });
+  }
+
+  const clearData = () => {
+    setInputs({
+      first_name: '',
+      last_name: '',
+      email: '',
+      address: '',
+      items: [],
+      sub_total: '',
+      discount: '',
+      total: '',
+      status: '',
+    });
+  }
+
+  function getOrder(d) {
+    // Decode base64-encoded items and convert them to JSON
+    const items = JSON.parse(atob(d.items));
+
+    // Set the items and other order details in the input state
+    setInputs({
+      first_name: d.first_name,
+      last_name: d.last_name,
+      email: d.email,
+      address: d.address,
+      items: [items],
+      sub_total: d.sub_total,
+      discount: d.discount,
+      total: d.total,
+      status: d.status,
+    });
   }
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs(values => ({ ...values, [name]: value }));
+    setInputs({ ...inputs, [name]: value });
   }
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    // Encode the items as base64 before sending to the server
+    const encodedItems = btoa(JSON.stringify(inputs.items));
+
+    // Update the items in the input state
+    setInputs({ ...inputs, items: encodedItems });
+
     axios.post(`${global.config.apiUrl}order/create`, inputs).then(function (response) {
-      console.log(response.data)
-      getDatas();
-      if (response.data.status === 1)
+      console.log(response.data);
+      getOrders();
+      if (response.data.status === 1) {
         document.getElementById('modelbutton').click();
+      }
     });
   }
+
+
   return (
     <section className="container2">
       <div className="row">
         <div className="col-12">
           <div className="filter-options">
-            <p>Filter selected: more than 100 $</p>
-            {/* <button className="icon-button" >
-                  <i className="ph-funnel"></i>
-              </button>
-              <button className="icon-button">
-                  <i className="ph-plus"></i>
-              </button> */}
-            <button onClick={clearData} id="modelbutton" type="button" className="btn btn-primary btn-sm float-end mb-2" data-bs-toggle="modal" data-bs-target="#myModal">
-              Add Coupon
-            </button>
+            {/* <button onClick={clearData} id="modelbutton" type="button" className="btn btn-primary btn-sm float-end mb-2" data-bs-toggle="modal" data-bs-target="#myModal">
+              Add Order
+            </button> */}
           </div>
         </div>
       </div>
@@ -73,29 +108,65 @@ function Order() {
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit} encType="multipart/form-data">
+                {/* Form input fields for order details */}
+                {/* Add form fields for first_name, last_name, email, address, items, sub_total, discount, total, and status */}
                 <div className="row">
                   <div className="col-sm-6 w-50">
                     <div className="mb-3">
-                      <label className="form-label text-white" htmlFor="name">Code</label>
-                      <input value={inputs.code} type="text" className="form-control border-secondary" name="code" onChange={handleChange} placeholder="Code" />
+                      <label className="form-label text-white" htmlFor="first_name">First Name</label>
+                      <input value={inputs.first_name} type="text" className="form-control border-secondary" name="first_name" onChange={handleChange} placeholder="First Name" />
                       <input value={inputs.id} type="hidden" name="id" />
+                    </div>
+                  </div>
+                  <div className="col-sm-5">
+                    <div className="mb-3">
+                      <label className="form-label text-white" htmlFor="last_name">Last Name</label>
+                      <input value={inputs.last_name} type="text" className="form-control border-secondary" name="last_name" onChange={handleChange} placeholder="Last Name" />
+                    </div>
+                  </div>
+                  <div className="col-sm-5">
+                    <div className="mb-3">
+                      <label className="form-label text-white" htmlFor="email">Email</label>
+                      <input value={inputs.email} type="text" className="form-control border-secondary" name="email" onChange={handleChange} placeholder="Email" />
+                    </div>
+                  </div>
+                  <div className="col-sm-5">
+                    <div className="mb-3">
+                      <label className="form-label text-white" htmlFor="address">Address</label>
+                      <input value={inputs.address} type="text" className="form-control border-secondary" name="address" onChange={handleChange} placeholder="Address" />
+                    </div>
+                  </div>
+                  {/* <div className="col-sm-5">
+                    <div className="mb-3">
+                      <label className="form-label text-white" htmlFor="items">Menu Items</label>
+                      <input value={inputs.items} type="text" className="form-control border-secondary" name="items" onChange={handleChange} placeholder="Menu Items"/>
+                    </div>
+                  </div> */}
+                  <div className="col-sm-5 ">
+                    <div className="mb-3">
+                      <label className="form-label text-white" htmlFor="sub_total">Sub Total</label>
+                      <input type="text" className="form-control border-secondary" name="sub_total" value={inputs.sub_total} onChange={handleChange} placeholder="Sub Total" />
                     </div>
                   </div>
                   <div className="col-sm-5 ">
                     <div className="mb-3">
-                      <label className="form-label text-white" htmlFor="email">Discount Percentage</label>
-                      <input type="text" className="form-control border-secondary" id="discount_percentage" name="discount_percentage" value={inputs.discount_percentage} onChange={handleChange} placeholder="Discount Percentage" />
+                      <label className="form-label text-white" htmlFor="discount">Total Discount</label>
+                      <input type="text" className="form-control border-secondary" name="discount" value={inputs.discount} onChange={handleChange} placeholder="Total Discount" />
                     </div>
                   </div>
-                  <div className="col-sm-6">
+                  <div className="col-sm-5 ">
                     <div className="mb-3">
-                      <label className="form-label text-white" htmlFor="datetime"> Expiration Date</label>
-                      <input type="date" className="form-control datetimepicker-input border-secondary" id="expiration_date" placeholder="Expiration Date"
-                        name="expiration_date"
-                        value={inputs.expiration_date}
-                        onChange={handleChange} />
+                      <label className="form-label text-white" htmlFor="total">Total Price</label>
+                      <input type="text" className="form-control border-secondary" name="total" value={inputs.total} onChange={handleChange} placeholder="Total Price" />
                     </div>
                   </div>
+                  <div className="col-sm-5 ">
+                    <div className="mb-3">
+                      <label className="form-label text-white" htmlFor="status">Order Status</label>
+                      <input type="text" className="form-control border-secondary" name="status" value={inputs.status} onChange={handleChange} placeholder="Order Status" />
+                    </div>
+                  </div>
+
                 </div>
                 <div className="row">
                   <div className="col-sm-2">
@@ -117,34 +188,64 @@ function Order() {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Code</th>
-                  <th>Discount Percentage</th>
-                  <th>Expiration Date</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Menu Items</th>
+                  <th>Sub Total</th>
+                  <th>Total Discount</th>
+                  <th>Total Price</th>
+                  <th>Order Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {coupon ? (
-                  coupon.map((coupon, key) => (
+                {orders ? (
+                  orders.map((order, key) => (
                     <tr key={key}>
-                      <td>{coupon.id}</td>
-                      <td>{coupon.code}</td>
-                      <td>{coupon.discount_percentage}</td>
-                      <td>{coupon.expiration_date}</td>
+                      <td>{order.order_id}</td>
+                      <td>{order.first_name}</td>
+                      <td>{order.last_name}</td>
+                      <td>{order.email}</td>
+                      <td>{order.address}</td>
                       <td>
-                        <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getCoupon(coupon)} id="modelbutton">Edit</button>
-
-                        <button className="btn btn-danger bg-danger w-60 me-2  ms-2 mt-1" onClick={() => deleteItems(coupon.id)}>Delete</button>
+                        {Array.isArray(order.items) ? (
+                          <ul>
+                            {order.items.map((item, index) => (
+                              <li key={index}>{item.name} - {item.price}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          "No items available"
+                        )}
+                      </td>
+                      <td>{order.sub_total}</td>
+                      <td>{order.discount}</td>
+                      <td>{order.total}</td>
+                      <td>
+                      <div className="form-group">
+                        <select className="form-control border-secondary" onChange={(e) => handleChange(order.id, e.target.value)}>
+                          <option value="Pending">Select Status</option>
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
+                        </select>
+                        </div>
+                      </td>
+                      <td>
+                        <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getOrder(order)} id="modelbutton">Edit</button>
+                        <button className="btn btn-danger bg-danger w-60 me-2  ms-2 mt-1" onClick={() => deleteOrder(order.order_id)}>Delete</button>
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7">No coupon available.</td>
+                    <td colSpan="5">No orders available.</td>
                   </tr>
                 )}
               </tbody>
-
             </table>
           </div>
         </div>
