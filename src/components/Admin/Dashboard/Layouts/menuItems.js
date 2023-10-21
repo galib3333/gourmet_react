@@ -22,7 +22,7 @@ function MenuItems() {
         });
     }
     function getCoupons() {
-        axios.get(`${global.config.apiUrl}coupon`).then(function (response) {
+        axios.get(`${global.config.apiUrl}coupons`).then(function (response) {
             setCoupons(response.data.data);
         });
     }
