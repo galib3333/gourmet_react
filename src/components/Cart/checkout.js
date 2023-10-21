@@ -2,17 +2,17 @@ import { React, useState } from 'react';
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import { useCart } from "react-use-cart";
+import { useNavigate } from 'react-router-dom'
 import { checkCoupon } from '../../api/check_coupon';
 import "./checkout.css";
-import { Link } from 'react-router-dom';
 
 const Checkout = () => {
-  const { cartTotal, items } = useCart();
+  const { cartTotal, items, emptyCart  } = useCart();
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscounts, setCouponDiscounts] = useState({});
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [usedCoupons, setUsedCoupons] = useState([]);
-
+  const navigate = useNavigate();
   const applyCoupon = async () => {
     console.log("Coupon code to apply:", couponCode);
 
@@ -59,8 +59,48 @@ const Checkout = () => {
       console.error(error.message);
     }
   };
-  
+
   const discountedTotal = cartTotal - totalDiscount;
+
+  const placeOrder = async () => {
+   
+      try {
+        const orderData = {
+          first_name: document.getElementById('firstName').value,
+          last_name: document.getElementById('lastName').value,
+          email: document.getElementById('email').value,
+          address: document.getElementById('address').value,
+          items: items,
+          sub_total: cartTotal.toFixed(2),
+          discount: totalDiscount.toFixed(2),
+          total: discountedTotal.toFixed(2),
+        };
+        const response = await fetch(`${global.config.apiUrl}order/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(orderData), // Assuming 'inputs' contains the data you want to send
+        });
+        const data = await response.json();
+        console.log(data);
+
+        if (data.status == 1) {
+          // Order was successfully placed
+          alert('Order placed successfully!');
+          emptyCart();
+          navigate('/ordersuccess');
+          // You can perform further actions, such as clearing the cart
+        } else {
+          // Order placement failed
+          alert('Failed to place the order. Please try again.');
+        }
+      } catch (error) {
+        // Handle errors here, e.g., network issues or server errors
+        console.error(error);
+      }
+  };
+
 
   return (
     <div className="container-xxl bg-white p-0">
@@ -197,9 +237,9 @@ const Checkout = () => {
                   <strong className="text-black">${discountedTotal.toFixed(2)}</strong>
                 </div>
               </div>
-              <Link to="/order">
-              <button className="btn btn-secondary py-3 mt-4 ms-2">Place Order</button>
-              </Link>
+              
+                <button className="btn btn-secondary py-3 mt-4 ms-2" onClick={placeOrder}>Place Order</button>
+             
             </div>
           </div>
 

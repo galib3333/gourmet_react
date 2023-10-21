@@ -4,7 +4,7 @@ import Footer from '../Footer/footer';
 import "./checkout.css";
 import { Link } from 'react-router-dom';
 
-const Order = () => {
+const Ordersuccess = () => {
 
   return (
     <div className="container-xxl bg-white p-0">
@@ -44,4 +44,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default Ordersuccess;

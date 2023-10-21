@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import MenuItems from './Layouts/menuItems';
 import Reservation from "./Layouts/reservation";
 import Coupon from "./Layouts/coupon";
+import Order from "./Layouts/order";
+
 function Dashboard() {
     const userLogged = JSON.parse(localStorage.getItem("userdata"));
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [isReservationVisible, setIsReservationVisible] = useState(false);
     const [isCouponVisible, setIsCouponVisible] = useState(false);
+    const [isOrderVisible, setIsOrderVisible] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
@@ -18,6 +21,9 @@ function Dashboard() {
     };
     const toggleCoupon = () => {
         setIsCouponVisible(!isCouponVisible);
+    };
+    const toggleOrder = () => {
+        setIsOrderVisible(!isOrderVisible);
     };
 
     return (
@@ -75,9 +81,9 @@ function Dashboard() {
                                 <i className="ph-file-text"></i>
                                 <span>Coupons</span>
                             </a>
-                            <a href="./">
-                                <i className="ph-globe"></i>
-                                <span>SWIFT</span>
+                            <a href="#order">
+                                <i className="ph-globe" onClick={toggleOrder}></i>
+                                <span>Order</span>
                             </a>
                             <a href="./">
                                 <i className="ph-clipboard-text"></i>
@@ -120,6 +126,9 @@ function Dashboard() {
                         )}
                         {isCouponVisible && (
                             <Coupon />
+                        )}
+                        {isOrderVisible && (
+                            <Order />
                         )}
                     </div>
                 </div>
