@@ -24,7 +24,7 @@
   background-color: var(--c-gray-900);
   color: var(--c-text-primary);
   display: flex;
-  padding-top: 3vw;
+  /* padding-top: 3vw; */
   padding-bottom: 3vw;
   justify-content: center;
 }
@@ -54,7 +54,7 @@ textarea {
 
 .app {
   min-height: 80vh;
-  width: 95%;
+  width: 100%;
   max-width: 1600px;
   background-color: var(--c-gray-800);
   padding: 2vw 4vw 6vw;
@@ -859,7 +859,8 @@ button:focus {
   text-align: left;
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
+  
 }
 
 .menu-table th {
@@ -868,7 +869,7 @@ button:focus {
   font-size: 10px;
   color: #f1f1f1;
   padding: 12px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .menu-table tr:nth-child(even) {
@@ -897,6 +898,17 @@ button:focus {
   display: flex;
   justify-content: center;
   overflow-x: auto;
+}
+/* CSS for the Menu Items <th> */
+.menu-items-th {
+  min-width: 210px;
+ 
+}
+
+/* CSS for the Menu Items <td> */
+.menu-items-td {
+  min-width: 210px;
+  
 }
 
 /* Responsive styles for smaller screens */

@@ -81,19 +81,15 @@ const Checkout = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(orderData), // Assuming 'inputs' contains the data you want to send
+        body: JSON.stringify(orderData),
       });
       const data = await response.json();
       console.log(data);
-
       if (data.status === 1) {
-        // Order was successfully placed
         alert('Order placed successfully!');
         emptyCart();
         navigate('/ordersuccess');
-        // You can perform further actions, such as clearing the cart
       } else {
-        // Order placement failed
         alert('Failed to place the order. Please try again.');
       }
     } catch (error) {

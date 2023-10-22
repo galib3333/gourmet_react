@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import axios from "axios";
 import '../dashboard.css';
 
@@ -29,18 +29,33 @@ function Order() {
   }
 
   const clearData = () => {
-    setInputs(values => ({ ...values, "order_id": "", "first_name": "", "last_name": "", "email": "", "address": "", "status": "", }))
+    setInputs({
+      first_name: '',
+      last_name: '',
+      email: '',
+      address: '',
+      sub_total: '',
+      discount: '',
+      total: '',
+      status: '',
+    });
   }
-
-  // function getOrder(d) {
-  //   setInputs(d);
-  //   setInputs(values => ({ ...values, }))
-  // }
 
   function getOrder(d) {
-    const { order_id,first_name, last_name, email, address, status } = d;
-    setInputs({ first_name, last_name, email, address, status,order_id });
+    const decodedItems = JSON.parse(atob(d.items));
+    setInputs({
+      first_name: d.first_name,
+      last_name: d.last_name,
+      email: d.email,
+      address: d.address,
+      items: decodedItems,
+      sub_total: d.sub_total,
+      discount: d.discount,
+      total: d.total,
+      status: d.status,
+    });
   }
+  
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -50,6 +65,12 @@ function Order() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // Encode the items as base64 before sending to the server
+    const encodedItems = btoa(JSON.stringify(inputs.items));
+
+    // Update the items in the input state
+    setInputs({ ...inputs, items: encodedItems });
+
     axios.post(`${global.config.apiUrl}order/create`, inputs).then(function (response) {
       console.log(response.data);
       getOrders();
@@ -57,6 +78,7 @@ function Order() {
       }
     });
   }
+
 
   return (
     <section className="container2">
@@ -78,6 +100,8 @@ function Order() {
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit} encType="multipart/form-data">
+                {/* Form input fields for order details */}
+                {/* Add form fields for first_name, last_name, email, address, items, sub_total, discount, total, and status */}
                 <div className="row">
                   <div className="col-sm-6 w-50">
                     <div className="mb-3">
@@ -104,16 +128,13 @@ function Order() {
                       <input value={inputs.address} type="text" className="form-control border-secondary" name="address" onChange={handleChange} placeholder="Address" />
                     </div>
                   </div>
-                  <div className="col-sm-5">
+                  
+                  
+                  
+                  <div className="col-sm-5 ">
                     <div className="mb-3">
                       <label className="form-label text-white" htmlFor="status">Order Status</label>
-                      <select name="status" className="form-control border-secondary" value={inputs.status} onChange={handleChange}>
-                        <option value="Pending">Select Status</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Processing">Processing</option>
-                        <option value="Shipped">Shipped</option>
-                        <option value="Delivered">Delivered</option>
-                      </select>
+                      <input type="text" className="form-control border-secondary" name="status" value={inputs.status} onChange={handleChange} placeholder="Order Status" />
                     </div>
                   </div>
 
@@ -142,7 +163,7 @@ function Order() {
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Address</th>
-                  <th className="menu-items-th">Menu Items</th>
+                  <th>Menu Items</th>
                   <th>Sub Total</th>
                   <th>Total Discount</th>
                   <th>Total Price</th>
@@ -159,7 +180,7 @@ function Order() {
                       <td>{order.last_name}</td>
                       <td>{order.email}</td>
                       <td>{order.address}</td>
-                      <td className="menu-items-td">
+                      <td>
                         {Array.isArray(order.items) ? (
                           <ul>
                             {order.items.map((item, index) => (
@@ -173,8 +194,15 @@ function Order() {
                       <td>{order.sub_total}</td>
                       <td>{order.discount}</td>
                       <td>{order.total}</td>
-                      <td>{order.status}</td>
-
+                      <td>
+                        <select name="status" className="form-control border-secondary bg-success text-white" style={{ width: '122px' }} onChange={handleChange}>
+                          <option value="Pending">Select Status</option>
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
+                        </select>
+                      </td>
                       <td>
                         <button className="btn btn-primary me-2  ms-2 mt-1" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => getOrder(order)}>Edit</button>
                         <button className="btn btn-danger bg-danger w-60 me-2  ms-2 mt-1" onClick={() => deleteOrder(order.order_id)}>Delete</button>

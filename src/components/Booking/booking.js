@@ -67,7 +67,7 @@ const Booking = ({ showHeader = true, showFooter = true, showHero = true }) => {
                     <div className="row g-0">
                         <div className="col-md-6">
                             <div className="video">
-                                <button type="button" className="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/xPPLbEFbCAo?si=YIYZOiWBSDQsUQXd" title="YouTube video player" data-bs-target="#videoModal">
+                                <button type="button" className="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/xPPLbEFbCAo?si=sQYUPdDhUNGiyPnQ" title="YouTube video player" data-bs-target="#videoModal">
                                     <span></span>
                                 </button>
                             </div>

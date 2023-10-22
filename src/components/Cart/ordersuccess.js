@@ -32,11 +32,10 @@ const Ordersuccess = () => {
             <h5>Thank You For Ordering</h5>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et lobortis lacus.</p>
             <div className="mb-5">
-            <Link to="/view-order" className="btn btn-primary mx-2">View Order</Link>
-            <Link to="/menu" className="btn btn-secondary mx-2">Continue Shopping</Link>
+              {/* <Link to="/vieworder" className="btn btn-primary mx-2">View Order</Link> */}
+              <Link to="/menu" className="btn btn-secondary mx-2">Continue Shopping</Link>
+            </div>
           </div>
-          </div>
-
         </div>
       </div>
       <Footer />
